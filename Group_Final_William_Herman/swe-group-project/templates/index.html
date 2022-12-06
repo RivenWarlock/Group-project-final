@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="index_style.css"> 
+    <meta charset="UTF-8">
+    <title>Your Ascii-Images Homepage</title>
+</head>
+<body>
+
+    <div style="display: grid; place-items: center;">
+        {% if image_search_results|length > 0 %}
+            <form action="{{ url_for('choose_searched_image') }}" method="post">
+                <input type="radio" id="image1" name="image" value="image1">
+                <label for="image1">
+                    <img width="20%" src="{{ image_search_results[0] }}"/>
+                </label>
+
+                <input type="radio" id="image2" name="image" value="image2">
+                <label for="image2">
+                    <img width="20%" src="{{ image_search_results[1] }}"/>
+                </label>
+
+                <input type="radio" id="image3" name="image" value="image3">
+                <label for="image3">
+                    <img width="20%" src="{{ image_search_results[2] }}"/>
+                </label>
+
+                <input type="submit">
+            </form>
+            <br>
+        {% endif %}
+
+        <form action="{{ url_for('file_upload') }}" method="post" enctype="multipart/form-data">
+            <input type="submit">
+            <label for="file">Upload a File!</label>
+            <input type="file" id="file" name="file" accept="image/jpg,image/png,image/jpeg">
+        </form>
+        <p>OR</p> 
+        <form action="{{ url_for('image_search') }}" method="post">
+            <input type="submit">
+            <label for="searchWord">Search for images!</label>
+            <input type="text" id="searchWord" name="searchWord">
+        </form>
+        <br>
+        <h1><u>Your Images:</u></h1><br>
+        {% for picture in pictures %}
+        <pre><span style="display: block; line-height: 5px; font-family: monospace; font-size: 5px;">{{picture.picture}}</span></pre>
+        <br>
+        {% endfor %}
+
+    </div>
+</body>
+</html>
